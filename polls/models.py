@@ -1,7 +1,16 @@
-from django.db import models
+"""
+Programa: models.py
+Autor: Osvaldo Larancuent
+Descripcion: Applicacion de encuestas utilizando Django
+Fecha: 27 de enero de 2019
+"""
+
+# Seccion de importacion
+import datetime
 
 # Create your models here.
 from django.db import models
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -9,6 +18,8 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     def __str_(self):
         return self.question_text
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
